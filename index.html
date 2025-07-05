@@ -3,20 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
+    <title>Autoplay Video with Sound</title>
     <style>
         /* Устанавливаем видео на весь экран */
         video {
             width: 100%;
-            height: 100vh; /* 100% от высоты экрана */
-            object-fit: cover; /* Видео будет заполнять весь экран */
+            height: 100vh;
+            object-fit: cover;
+        }
+        /* Стили для кнопки (для мобильных и десктопных браузеров) */
+        #clickToPlay {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #ff5733;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        #clickToPlay:hover {
+            background-color: #e74c3c;
         }
     </style>
 </head>
 <body>
-    <video autoplay loop muted>
+
+    <!-- Видео (изначально без звука) -->
+    <video id="video" autoplay loop muted playsinline>
         <source src="./img/output_video.mp4" type="video/mp4">
         Ваш браузер не поддерживает видео.
     </video>
+
+    <!-- Кнопка для включения звука -->
+    <button id="clickToPlay" onclick="enableSound()">Включить звук</button>
+
+    <script>
+        // Функция для включения звука
+        function enableSound() {
+            var video = document.getElementById("video");
+            var button = document.getElementById("clickToPlay");
+
+            // Убираем атрибут muted, чтобы включить звук
+            video.muted = false;
+
+            // Убираем кнопку, как только звук включен
+            button.style.display = 'none';
+        }
+
+        // Автоматический запуск видео при клике на страницу
+        window.addEventListener("click", function() {
+            var video = document.getElementById("video");
+            // Убираем атрибут muted, чтобы включить звук
+            video.muted = false;
+
+            // Прекращаем показывать кнопку, если пользователь уже взаимодействовал
+            var button = document.getElementById("clickToPlay");
+            button.style.display = 'none';
+        });
+    </script>
+
 </body>
 </html>
+
